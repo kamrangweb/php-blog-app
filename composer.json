@@ -1,0 +1,21 @@
+{
+    "name": "user/php-blog-app",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/helpers.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "php-blog-app"
+        }
+    ],
+    "require": {
+        "bramus/router": "^1.6",
+        "ext-pdo": "*",
+        "ext-json": "*"
+    }
+}
