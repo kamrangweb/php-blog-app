@@ -1,22 +1,64 @@
+<div class="row">
+    <article class="blog-post mt-5 mb-5">
+        <h2 class="blog-post-title text-center section-title mb-3"><?php echo $params['post']->title; ?></h2>
+        <div class="small">
+            <span class="badge bg-info small">Category: <?php echo $params['post']->category_name; ?></span>
+        </div>
+        
+
+        
+
+        <p class="blog-post-meta mt-2">
+            <small>
+                <i class="far fa-clock text-info"></i> <?php echo $params['post']->getCreatedAt(); ?> |
+                Published by <a href="#" class="text-decoration-none text-secondary"><?php echo $params['post']->username; ?></a>
+            </small>
+        </p>
+
+        <?php foreach ($params['posts'] as $post): ?>
+
+            <?php 
+
+            if($post->title == $params['post']->title ) {?>
 
 
-<article class="blog-post">
-    <h2 class="blog-post-title"><?php echo $params['post']->title; ?></h2>
-    <div class="mb-1">
-        <?php foreach ($params['post']->tags() as $tag): ?>
-            <span class="badge rounded-pill bg-success">
-                <a class="text-decoration-none text-white" href="<?php echo url("tags/$tag->id"); ?>">
-                    <?php echo $tag->title; ?>
-                </a>
-            </span>
+        <div class="card">
+            <div class="position-relative">
+                <img class="card-img w-100 rounded" src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/pasta.jpg" alt="Post Image">
+
+                <div class="card-img-overlay position-absolute d-flex flex-wrap align-items-start p-2">
+
+                        <?php foreach ($post->getTagsOfPost($post->id) as $tag): ?>
+
+
+                        
+
+                        <span class="badge bg-light m-1">
+                            <a class="text-decoration-none text-dark small" href="<?php echo url("tags/$tag->id"); ?>">
+                                <?php echo $tag->tag; ?>
+                            </a>
+                        </span>
+                    <?php endforeach; ?>
+                    
+                </div>
+            </div>
+
+            <div class="card-body show-text p-4">
+                <p class="main-text" style="text-indent: 50px;"><?php echo $params['post']->body; ?></p>
+
+                <div class=" justify-content-between">
+                    <a href="<?php echo url('posts'); ?>" class="btn btn-danger float-end">
+                        <i class="bi bi-caret-left"></i> Back
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+        <?php }else{ continue;}?>
         <?php endforeach; ?>
-    </div>
-    <p class="blog-post-meta">
-        <small>Published <?php echo $params['post']->getCreatedAt(); ?> by <a href="#">John Smith</a></small>
-    </p>
-    <p><?php echo $params['post']->body; ?></p>
-    <a href="<?php echo url('posts'); ?>" class="btn btn-danger float-end">
-        <i class="bi bi-caret-left"></i>
-        Back
-    </a>
-</article>
+        
+
+    </article>
+</div>

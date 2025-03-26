@@ -2,23 +2,12 @@
 
 namespace App\Domain\Models;
 
-/**
- * Class Tag
- * @package App\Domain\Models
- *
- * @property string $title
- * @property string $created_at
- */
+
 class Tag extends Model
 {
-    /**
-     * @var string
-     */
+
     protected $table = 'tags';
 
-    /**
-     * @return array
-     */
     public function posts(): array
     {
         return $this->query(

@@ -1,0 +1,211 @@
+html {
+    scroll-behavior: smooth;
+}   
+
+body {
+    text-decoration: none !important;
+    /* no underline */
+    font-weight: normal;
+    /* text-align: justify; */
+    /* Makes paragraphs look clean */
+    font-family: "Poppins", sans-serif;
+    /* Clean, modern font */
+    transition: color 0.3s ease-in-out;
+    /* Smooth transition on hover */
+}
+
+/* For all section's title */
+.section-title {
+    font-size: 2.5rem;
+}
+
+/* Navigation */
+.logo {
+    font-weight: 900;
+    font-size: 1.5rem;
+}
+
+.nav-item {
+    margin: 0 20px;
+}
+
+/* Main Section */
+#top-bar {
+    height: 11vh;
+}
+
+#top-bar nav {
+    background-color: #51839b;
+}
+
+.hero-section {
+    border-radius: 15px;
+    height: auto;
+    margin-bottom: 50px;
+    background-image: linear-gradient(120deg, #5a34fc 0%, #86b7fe 100%);
+}
+
+.header-main {
+    margin-top: 20px;
+}
+
+.header-info {
+    font-weight: 800;
+    font-size: 3rem;
+    color: #fff;
+}
+
+.btn-outline-light {
+    margin-left: 20px;
+}
+
+.btn-space {
+    margin-top: 20px;
+}
+
+/* Overview */
+.info-width {
+    width: 60%;
+    font-size: 1.3rem;
+}
+
+
+.card {
+    box-shadow: 0px 3px 63px -12px rgba(0, 0, 0, 0.75);
+    border-radius: 15px;
+    border: none;
+}
+
+.small {
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.card .small {
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.card-body {
+    padding: 7% 0;
+}
+
+.card-img {
+    height: 120px;
+    object-fit: cover;
+    border: 0;
+    border-radius: 0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.card-content {
+    height: 200px;
+}
+
+.card-content p,
+.show-text p {
+    text-decoration: none !important;
+    /* no underline */
+    font-weight: normal;
+    font-size: 14px;
+    /* Standard readable size */
+    font-weight: 400;
+    /* Normal weight */
+    line-height: 1.2;
+    /* Good spacing for readability */
+    color: #6c757d !important;
+    /* Dark gray for a softer look than pure black */
+    text-align: justify;
+    /* Makes paragraphs look clean */
+    letter-spacing: 0.5px;
+    /* Slight letter spacing for a modern touch */
+    font-family: "Poppins", sans-serif;
+    /* Clean, modern font */
+    transition: color 0.3s ease-in-out;
+    /* Smooth transition on hover */
+}
+
+.read-more {
+    margin-left: auto;
+    align-content: center;
+}
+
+.read-more i {
+    margin-top: 3px;
+    margin-left: 3px;
+}
+
+.show-text p {
+    text-indent: 50px;
+}
+
+.pricing-text {
+    color: #5a34fc;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 5% 0%;
+}
+
+.btn-block {
+    font-size: 1.5rem;
+}
+
+/* Call To Action */
+#cta {
+    background-color: #5a34fc;
+    padding: 7% 15%;
+  
+}
+
+.cta-text {
+    font-weight: bold;
+    font-size: 3rem;
+    color: #fff;
+}
+
+/* Footer */
+#footer {
+    height: 200px;
+}
+
+.footer-icon {
+    font-size: 2rem;
+    color: #5a34fc;
+    padding: 5% 3%;
+}
+
+/* Media Queries */
+@media only screen and (max-width: 768px) {
+    .iphone-mock {
+        display: none;
+    }
+
+    .card {
+        margin: 20px 0;
+    }
+
+    .header-info {
+        font-size: 2rem;
+    }
+
+    .btn-outline-light {
+        margin-left: 0px;
+    }
+
+    #footer {
+        height: 70px;
+    }
+
+    .table>:not(caption)>*>* {
+        padding: 0.51rem;
+    }
+
+    .cta-text {
+        font-size: 2rem;
+    }
+
+    .footer {
+        text-align: center;
+    }
+}

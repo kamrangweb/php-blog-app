@@ -10,31 +10,16 @@
     <link rel="stylesheet" href="<?php echo asset('css/bootstrap.min.css'); ?>">
     <!-- APP CSS -->
     <link rel="stylesheet" href="<?php echo asset('css/styles.css'); ?>">
-    <style>
-
-        body{
-            background-color:#99ffee;
-    background-image:
-    radial-gradient(at 81% 66%, hsla(178,76%,62%,1) 0px, transparent 50%),
-    radial-gradient(at 48% 30%, hsla(46,76%,73%,1) 0px, transparent 50%),
-    radial-gradient(at 12% 78%, hsla(235,64%,75%,1) 0px, transparent 50%),
-    radial-gradient(at 27% 68%, hsla(282,88%,72%,1) 0px, transparent 50%),
-    radial-gradient(at 60% 64%, hsla(21,98%,74%,1) 0px, transparent 50%),
-    radial-gradient(at 97% 11%, hsla(222,83%,69%,1) 0px, transparent 50%),
-    radial-gradient(at 91% 9%, hsla(0,98%,75%,1) 0px, transparent 50%);
-        }
-
-    </style>
 </head>
-<body >
+<body style="background: #e2e3e5">
     <section class="vh-100">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-7 col-lg-5">
                     <div class="card p-4 p-md-5 shadow-sm">
-                        <h3 class="text-center mb-4">User Login</h3>
+                        <h3 class="text-center mb-4">User Register</h3>
 
-                        <form action="<?php echo ROOT_URL . 'login'; ?>" method="POST" autocomplete="off">
+                        <form action="<?php echo ROOT_URL . 'register'; ?>" method="POST" autocomplete="off">
                             <div class="mb-3">
                                 <label for="input_username" class="form-label text-black-50 fs-sm">Username</label>
                                 <input type="text"
@@ -68,22 +53,18 @@
                                 <?php endif; ?>
                             </div>
                             <div class="my-2">
-                                <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign in</button>
+                                <button type="submit" class="form-control btn btn-primary rounded submit px-3">Register</button>
                             </div>
                         </form>
-                        
-                        <div class="d-grid gap-2  mb-3">
+                        <div class="d-grid gap-2 mb-3">
                             
-                            <a href="<?php echo url('register'); ?>" class="btn btn-outline-success w-200">
-                                Sign Up
-                            </a>
-                            
-                            
+                            <a href="<?php echo url('login'); ?>" class="btn btn-link text-decoration-none">Already have an account?</a>
 
-                            <a href="<?php echo url('/'); ?>" class="btn btn-outline-info w-25 mt-3 mx-auto ">
+                            <a href="<?php echo url('/'); ?>" class="btn btn-outline-info w-25  mt-3 mx-auto">
                                 Home
                             </a>
                         </div>
+                        
                     </div>
                 </div>
             </div>

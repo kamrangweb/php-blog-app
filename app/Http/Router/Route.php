@@ -11,35 +11,19 @@ use App\Http\Request;
  */
 class Route
 {
-    /**
-     * @var string
-     */
+
     private $path;
-
-    /**
-     * @var string
-     */
     private $action;
-
-    /**
-     * @var array
-     */
     private $matches;
 
-    /**
-     * @param string $path
-     * @param string $action
-     */
+
+
     public function __construct(string $path, string $action)
     {
         $this->path = trim($path, '/');
         $this->action = $action;
     }
 
-    /**
-     * @param string $url
-     * @return bool
-     */
     public function matches(string $url)
     {
         $path = preg_replace('#:([\w]+)#', '([^/]+)', $this->path);
@@ -53,10 +37,6 @@ class Route
         return false;
     }
 
-    /**
-     * @param array|null $superGlobals
-     * @return mixed
-     */
     public function execute(?array $superGlobals = null)
     {
         $request = new Request($superGlobals);

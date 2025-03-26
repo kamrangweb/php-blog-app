@@ -2,39 +2,24 @@
 
 namespace App\Utils;
 
-/**
- * Class Validator
- * @package App\Utils
- */
+
 class Validator
 {
-    /**
-     * @var array
-     */
     private $raw_data = null;
 
-    /**
-     * @var array
-     */
+
     private $validated_data = null;
 
-    /**
-     * @var array
-     */
+
     public $errors = null;
 
-    /**
-     * @param array $data
-     */
+
     public function __construct(array $data)
     {
         $this->raw_data = $data;
     }
 
-    /**
-     * @param array $rules
-     * @return null|array
-     */
+
     public function validate(array $rules): ?array
     {
         foreach ($rules as $rule_name => $rules_array) {
@@ -57,11 +42,7 @@ class Validator
         return $this->getErrors();
     }
 
-    /**
-     * @param string $name
-     * @param string $value
-     * @return void
-     */
+
     private function required(string $name, string $value): void
     {
         $value = trim($value);
@@ -71,12 +52,7 @@ class Validator
         }
     }
 
-    /**
-     * @param string $name
-     * @param string $value
-     * @param string $rule
-     * @return void
-     */
+
     private function min(string $name, string $value, string $rule): void
     {
         preg_match_all('/(\d+)/', $rule, $matches);
@@ -87,9 +63,7 @@ class Validator
         }
     }
 
-    /**
-     * @return null|array
-     */
+
     private function getErrors(): ?array
     {
         return $this->errors;

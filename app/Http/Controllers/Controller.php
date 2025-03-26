@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Database\DBConnection;
 
-/**
- * Class Controller
- * @package App\Http\Controllers
- */
+
 abstract class Controller
 {
     /**
@@ -35,13 +32,7 @@ abstract class Controller
         return $this->db;
     }
 
-    /**
-     * Genera la vista correspondiente que se desea mostrar al cliente.
-     *
-     * @param string $view
-     * @param array|null $params
-     * @return mixed
-     */
+
     protected function view(string $view, array $params = null)
     {
         ob_start();
@@ -51,10 +42,7 @@ abstract class Controller
         return require VIEWS_FOLDER . 'layout.view.php';
     }
 
-    /**
-     * @return bool|void
-     */
-    protected function isAdmin()
+    protected function isLoggedIn()
     {
         if (
             isset($_SESSION['auth'])
@@ -63,6 +51,6 @@ abstract class Controller
             return true;
         }
 
-        header('Location: /login');
+        header('Location: ' . ROOT_URL . 'login');
     }
 }

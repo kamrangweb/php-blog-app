@@ -31,18 +31,12 @@ abstract class Model
         $this->db = $db;
     }
 
-    /**
-     * @return array
-     */
     public function all(): array
     {
         return $this->query("SELECT * FROM ".$this->table." ORDER BY created_at DESC");
     }
 
-    /**
-     * @param int $id
-     * @return mixed
-     */
+
     public function findById(int $id)
     {
         $model = $this->query("SELECT * FROM ".$this->table." WHERE id = ?", [$id], true);
@@ -50,14 +44,7 @@ abstract class Model
         return $model ?: false;
     }
 
-    /**
-     * Prepara una consulta SQL de tipo INSERT
-     *
-     * @param array $data
-     * @param array|null $relations
-     * @return bool
-     */
-    protected function create(array $data, ?array $relations = null): bool
+    public function create(array $data): bool
     {
         $columns = "";
         $bindings = "";
@@ -78,14 +65,8 @@ abstract class Model
         return $this->query($sql, $data);
     }
 
-    /**
-     * Prepara una consulta SQL de tipo UPDATE
-     *
-     * @param array $data
-     * @param array|null $relations
-     * @return bool
-     */
-    protected function update(array &$data, ?array $relations = null): bool
+
+    protected function update(array &$data): bool
     {
         $data['id'] = $this->id;
 
@@ -105,22 +86,13 @@ abstract class Model
         return $this->query($sql, $data);
     }
 
-    /**
-     * Prepara una consulta SQL de tipo DELETE
-     *
-     * @return bool
-     */
+
     public function destroy(): bool
     {
         return $this->query("DELETE FROM ".$this->table." WHERE id = ?", [$this->id]);
     }
 
-    /**
-     * Prepara una consulta SQL para actualizar la fecha de modificacion de
-     * un registro en la DB
-     *
-     * @return bool
-     */
+
     protected function updateTimestamps(): bool
     {
         $sql = "UPDATE ".$this->table." SET updated_at = NOW() WHERE id = ?";
@@ -129,12 +101,7 @@ abstract class Model
     }
 
 
-     /*
-     * @param string $sql
-     * @param array|null $params
-     * @param bool|null $single
-     * @return mixed
-     */
+
     protected function query(string $sql, ?array $params = null, ?bool $single = null)
     {
         $method = is_null($params) ? 'query' : 'prepare';
