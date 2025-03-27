@@ -1,20 +1,32 @@
-
-
 <?php
 
     if (isset($_SESSION['edit_success']['edit']) && $_SESSION['edit_success']['edit'] == 'Edited') {
         echo '<script language="javascript">';
         // echo 'alert("Message successfully sent");';  
-        echo 'function clickEdit() { Swal.fire("Edited!", "The post was edited.", "success");  }'; // Define clickEdit
-        echo 'function clickEditClose() { document.getElementsByClassName("swal2-confirm")[0].click(); }'; // Define clickEdit
-        echo 'setTimeout(clickEdit, 100);'; // Call it after 3 seconds
-        echo 'setTimeout(clickEditClose, 2000);'; // Call it after 3 seconds swal2-confirm swal2-styled
+        echo 'function clickEdit() { Swal.fire("Edited!", "The post was edited.", "success");  }'; 
+        echo 'function clickEditClose() { document.getElementsByClassName("swal2-confirm")[0].click(); }'; 
+        echo 'setTimeout(clickEdit, 100);'; 
+        echo 'setTimeout(clickEditClose, 2000);';
         echo '</script>';
     }
+
+    unset($_SESSION['edit_success']['edit']);
     
 ?>
 
-<?php unset($_SESSION['edit_success']['edit']);?>
+<?php 
+    if (isset($_SESSION['add_success']['add']) && $_SESSION['add_success']['add'] == 'Added') {
+        echo '<script language="javascript">';
+        // echo 'alert("Message successfully sent");';  
+        echo 'function clickAdd() { Swal.fire("Added!", "The post was added.", "success");  }'; 
+        echo 'function clickAddClose() { document.getElementsByClassName("swal2-confirm")[0].click(); }'; 
+        echo 'setTimeout(clickAdd, 100);'; 
+        echo 'setTimeout(clickAddClose, 2000);'; 
+        echo '</script>';
+    }
+
+    unset($_SESSION['add_success']['add']);
+?>
 
 
 <?php if (isset($_SESSION['msg']['success'])): ?>

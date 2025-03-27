@@ -86,7 +86,7 @@
 
 
 
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
+                    <div class="col-lg-12 col-md-6 col-sm-12 mb-2">
                         <label for="input_categories" class="form-label">Categories</label>
                         <select class="form-select"
                                 id="input_categories"
@@ -101,7 +101,7 @@
                                 <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
+                    <div class="col-lg-12 col-md-6 col-sm-12 mb-2">
                         <label for="input_tags" class="form-label">Tags</label>
                         <select class="form-select"
                                 id="input_tags"

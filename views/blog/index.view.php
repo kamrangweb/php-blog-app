@@ -5,7 +5,6 @@
         <h1 class="text-center section-title mb-5 mt-5">Blog Posts</h1>
           <div class="row mb-4 mx-auto">
             <div class="col-md-6 mb-3">
-                <h5>Search by categories</h5>
                 <select id="categoryFilter" class="form-select">
                     <option value="">All Categories</option>
                     <?php foreach ($params['categories'] as $category): ?>
@@ -14,7 +13,6 @@
                 </select>
             </div>
             <div class="col-md-6">
-                <h5>Search by tags</h5>
                       
                 <select id="tagFilter" class="form-select">
                     <option value="">All Tags</option>
@@ -31,7 +29,7 @@
                 <div class="card">
                     
                     <div class="position-relative">
-                      <img class="card-img h-25" src="<?php echo $post->image_path; ?>" alt="Post Image">
+                      <img class="card-img" src="<?php echo $post->image_path; ?>" alt="Post Image">
 
                       <div class="card-img-overlay position-absolute">
                           <?php foreach ($post->getTagsOfPost($post->id) as $tag): ?>

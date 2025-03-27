@@ -1,3 +1,22 @@
+
+<?php if (!empty($_SESSION['errors_upload']['upload'])): ?>
+    <div class="row">
+        <div class="container">
+            <div class="alert alert-danger alert-dismissible d-flex align-items-center mt-3" role="alert">
+                <i class="bi bi-exclamation-circle-fill me-2"></i>
+                <div>
+                    <?php echo $_SESSION['errors_upload']['upload'];?>
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+
+
+
+
 <h1 class="mt-5 mb-5">Creating a new post</h1>
 <div class="row mb-5">
     <div class="container">
