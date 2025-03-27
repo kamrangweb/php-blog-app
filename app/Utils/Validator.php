@@ -48,7 +48,7 @@ class Validator
         $value = trim($value);
 
         if (empty($value)) {
-            $this->errors[$name][] = "El input $name es requerido.";
+            $this->errors[$name][] = "$name value is required.";
         }
     }
 
@@ -59,7 +59,7 @@ class Validator
         $min = (int) $matches[0][0];
 
         if (strlen($value) < $min) {
-            $this->errors[$name][] = "El input $name debe contener al menos $min caracteres.";
+            $this->errors[$name][] = "The $name input must contain at least $min characters.";
         }
     }
 

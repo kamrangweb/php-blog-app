@@ -35,14 +35,14 @@ class PostController extends Controller
 
     public function store(): void
 {
+    $_SESSION['errors_upload']['upload'][] = '';
+
     $this->isLoggedIn();
     
     $post = new Post($this->getDB());
     $tags = $_POST['tags'] ?? [];
     unset($_POST['tags']);
 
-    // Yükleme dizini
-    // $uploads_dir = ROOT_URL . 'uploads/';
     $uploads_dir = __DIR__ . '/../../../../public/uploads/'; 
 
     if (!is_dir($uploads_dir)) {
@@ -58,10 +58,9 @@ class PostController extends Controller
         $target_path = $uploads_dir . $unique_name;
 
         if (move_uploaded_file($tmp_name, $target_path)) {
-            // $_POST['image_path'] = '/uploads/' . $unique_name; // Veritabanına kaydedilecek yol
             $_POST['image_path'] = ROOT_URL . 'uploads/' . $unique_name; 
         } else {
-            die('Dosya yükleme başarısız!');
+            die('Not Success!');
         }
     } else {
         $_POST['image_path'] = null;
@@ -73,7 +72,7 @@ class PostController extends Controller
         header('Location: ' . ROOT_URL . 'admin/posts');
         exit;
     } else {
-        die('Post kaydedilemedi!');
+        die('Not saved!');
     }
 }
 
@@ -102,53 +101,73 @@ class PostController extends Controller
 
     public function update()
     {
+        unset($_SESSION['errors_upload']['upload']);
+        unset($_SESSION['edit_success']['edit']);
+
+
         $this->isLoggedIn();
 
         $post = (new Post($this->getDB()))->findById($_POST['id']);
         $tags = $_POST['tags'];
         unset($_POST['tags']);
 
-
-
         $uploads_dir = __DIR__ . '/../../../../public/uploads/'; 
 
-        if (!is_dir($uploads_dir)) {
-            mkdir($uploads_dir, 0777, true);
-        }
-
         if (isset($_FILES['image_path']) && $_FILES['image_path']['error'] === UPLOAD_ERR_OK) {
+            
             $tmp_name = $_FILES['image_path']['tmp_name'];
             $name = $_FILES['image_path']['name'];
+            $old_image=$_POST['old_image'];
+            $old_image_dir=$uploads_dir."".basename($old_image);
+
+    
             $ext = pathinfo($name, PATHINFO_EXTENSION);
 
-            $unique_name = uniqid('img_', true) . '.' . $ext;
-            $target_path = $uploads_dir . $unique_name;
+            $allowed_extensions = array(".jpg",".jpeg",".png",".gif");
+            if(in_array('.' . $ext,$allowed_extensions))
+            {
 
-            if (move_uploaded_file($tmp_name, $target_path) && isset($_POST['old_image'])) {
-                $_POST['image_path'] = ROOT_URL . 'uploads/' . $unique_name; 
-            } else {
-                die('Dosya yükleme başarısız!');
+                $unique_name = uniqid('img_', true) . '.' . $ext;
+                $target_path = $uploads_dir . $unique_name;
+
+                if (move_uploaded_file($tmp_name, $target_path)) {
+                    $_POST['image_path'] = ROOT_URL . 'uploads/' . $unique_name; 
+                } else {
+                    
+                    die('File upload error!');
+                }
+            } else{
+                $_SESSION['errors_upload']['upload'] = 'Invalid image format';
             }
-        } else {
+        }else {
+
             $_POST['image_path'] = $post->image_path;
-            echo isset(['image_path']['error']);
-        }
 
-
-        
+        } 
 
 
 
+        if (!isset($_SESSION['errors_upload']['upload']) && $post) {
+            if(isset($_POST['old_image'])){
+                unset($_POST['old_image']);
+            }
+
+            if ($post->update($_POST, $tags)) {                
+                unlink($old_image_dir);
+                
+                header('Location: '. ROOT_URL . 'admin/posts?updated=success');
+                unset($_SESSION['errors_upload']['upload']);
+                $_SESSION['edit_success']['edit']="Edited";
 
 
-
-        if ($post) {
-            if ($post->update($_POST, $tags)) {
-                header('Location: '. ROOT_URL . 'admin/posts?' . $_POST['image_path']);
                 return;
             }
 
-            // $this->up
+            // $this->updateTimestamps();
+
+        }else{
+                header('Location: '. ROOT_URL . 'admin/posts/edit/' . $_POST['id']);
+                return;
         }
 
         throw new NotFoundException('Not found');

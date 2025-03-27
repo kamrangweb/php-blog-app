@@ -24,7 +24,7 @@
 
         <div class="card">
             <div class="position-relative">
-                <img class="card-img w-100 rounded" src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/pasta.jpg" alt="Post Image">
+                <img class="card-img show-post-img w-100" src="<?php echo $params['post']->image_path; ?>" alt="Post Image">
 
                 <div class="card-img-overlay position-absolute d-flex flex-wrap align-items-start p-2">
 

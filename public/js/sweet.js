@@ -34,7 +34,7 @@ $(function () {
 });
 
 
-function clickEdit(el) {
+function clickEdit() {
     // if(el.getAttribute("type") == 'button')
     Swal.fire("Edited!", "The post was edited.", "success");    
     setTimeout(edit, 1500);
@@ -47,15 +47,15 @@ function clickEdit(el) {
     }
 }
 
-function clickAdd(el) {
-    console.log(el);
+function clickAdd() {
+    // console.log(el);
     Swal.fire("Added!", "The new post was added.", "success");    
-    setTimeout(add, 1500);
+    // setTimeout(add, 1500);
 
-    function add() {
-        el.setAttribute("type", "submit");
-        el.removeAttribute("onclick");
-        document.getElementById("input_content").removeAttribute("required");
-        el.click();
-    }
+    // function add() {
+    //     el.setAttribute("type", "submit");
+    //     el.removeAttribute("onclick");
+    //     document.getElementById("input_content").removeAttribute("required");
+    //     el.click();
+    // }
 }

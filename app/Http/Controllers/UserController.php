@@ -83,8 +83,6 @@ class UserController extends Controller
 
         if ($user) {
             if (password_verify($_POST['password'], $user->password)) {
-            // if ($user) {
-                // $_SESSION['auth'] = $user->is_admin;
                 $_SESSION['user'] = $user -> id;
                 $_SESSION['auth'] = 1;
                 $_SESSION['msg']['success'] = 'Welcome '.strtoupper($user->username).'!';

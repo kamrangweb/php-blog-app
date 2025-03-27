@@ -1,8 +1,20 @@
+
+
 <?php
-    error_reporting(E_ALL);
-    ini_set('display_errors', '1');
+
+    if (isset($_SESSION['edit_success']['edit']) && $_SESSION['edit_success']['edit'] == 'Edited') {
+        echo '<script language="javascript">';
+        // echo 'alert("Message successfully sent");';  
+        echo 'function clickEdit() { Swal.fire("Edited!", "The post was edited.", "success");  }'; // Define clickEdit
+        echo 'function clickEditClose() { document.getElementsByClassName("swal2-confirm")[0].click(); }'; // Define clickEdit
+        echo 'setTimeout(clickEdit, 100);'; // Call it after 3 seconds
+        echo 'setTimeout(clickEditClose, 2000);'; // Call it after 3 seconds swal2-confirm swal2-styled
+        echo '</script>';
+    }
+    
 ?>
 
+<?php unset($_SESSION['edit_success']['edit']);?>
 
 
 <?php if (isset($_SESSION['msg']['success'])): ?>
@@ -16,12 +28,14 @@
         </div>
     </div>
 <?php endif; ?>
+
+
 <div class="row mt-3">
     <div class="container">
         <div class="d-inline admin-user">
 
-            <h1 class="m-3">USER <?php echo $_SESSION['user']; ?></h1>
-            <h1 class="m-3 mb-5">Admin panel</h1>
+            <!-- <h1 class="m-3">USER <?php echo $_SESSION['user']; ?></h1> -->
+            <h1 class="m-3 mb-3">Admin panel</h1>
             <a href="<?php echo url("admin/posts/create"); ?>" class="btn btn-success float-end">
                 <i class="bi bi-plus"></i>
                 New

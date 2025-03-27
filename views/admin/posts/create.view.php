@@ -25,21 +25,11 @@
                                   rows="6"
                                   required><?php echo $_POST['body'] ?? ''; ?></textarea>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label col-lg-4">Image upload</label>
-                            <div class="">
-                                <div class="fileupload fileupload-new" data-provides="fileupload">
-                                    <span class="btn btn-file btn-default">
-                                        <span class="fileupload-new">Choose</span>
-                                        <span class="fileupload-exists">Change</span>
-                                        <input type="file" name="image_path">
-                                    </span>
-                                    <span class="fileupload-preview"></span>
-                                    <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
-                                </div>
-                            </div>
-                        </div>
+
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Image upload</label>
+                        <input class="form-control" type="file" id="formFile" name="image_path" required>
+                        <span class="text-danger small">Only jpg / jpeg/ png /gif format allowed.</span>
                     </div>
 
 

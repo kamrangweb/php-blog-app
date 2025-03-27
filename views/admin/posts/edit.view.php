@@ -5,6 +5,32 @@
 
 </head>
 
+
+
+
+
+
+
+<?php if (!empty($_SESSION['errors_upload']['upload'])): ?>
+    <div class="row">
+        <div class="container">
+            <div class="alert alert-danger alert-dismissible d-flex align-items-center mt-3" role="alert">
+                <i class="bi bi-exclamation-circle-fill me-2"></i>
+                <div>
+                    <?php echo $_SESSION['errors_upload']['upload'];?>
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+
+
+
+
+
+
 <h1 class="mt-5 mb-5">Edit post <span class="rounded-pill text-mute border badge bg-primary">#<?php echo $params['post']->id; ?></span></h1>
 <div class="row mb-5">
     <div class="container">
@@ -48,29 +74,19 @@
                         </div>
                     </div>
 
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label col-lg-4">Image upload</label>
-                            <div class="">
-                                <div class="fileupload fileupload-new" data-provides="fileupload">
-                                    <span class="btn btn-file btn-default">
-                                        <span class="fileupload-new">Choose</span>
-                                        <span class="fileupload-exists">Change</span>
-                                        <input type="file" name="image_path">
-                                    </span>
-                                    <span class="fileupload-preview"></span>
-                                    <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Image upload</label>
+                        <input class="form-control" type="file" id="formFile" name="image_path">
+                        <span class="text-danger small">Only jpg / jpeg/ png /gif format allowed.</span>
+                        <!-- -->
                     </div>
 
                     
 
 
 
-                    <div class="col-12 mb-2">
+
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
                         <label for="input_categories" class="form-label">Categories</label>
                         <select class="form-select"
                                 id="input_categories"
@@ -105,7 +121,7 @@
                         <div class="float-end">
                             <a href="<?php echo url('admin/posts');?>" class="btn btn-outline-warning">Cancel</a>
 
-                            <button type="button" class="btn btn-primary" onclick='clickEdit(this);'>
+                            <button type="submit" class="btn btn-primary">
                                 <i class="bi bi-save"></i>
                                 Done
                             </button>
