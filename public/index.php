@@ -1,11 +1,10 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+// error_reporting(E_ALL);
+// ini_set('display_errors', '1');
 
 echo "<!DOCTYPE html>";
 
-// echo $refimgyol;
 
 use App\Exceptions\NotFoundException;
 use App\Http\Router\Router;
