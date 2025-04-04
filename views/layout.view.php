@@ -105,18 +105,14 @@
                   $allPosts = $params['posts'];
                   $totalPosts = count($allPosts);
 
-                  // Eğer toplam post sayısı 5'ten azsa, hepsini al
                   $numPosts = min(5, $totalPosts);
 
-                  // Rastgele indexleri oluştur
                   $randomIndexes = array_rand(range(0, $totalPosts - 1), $numPosts);
 
-                  // Eğer tek bir değer dönerse array yapısına al
                   if (!is_array($randomIndexes)) {
                      $randomIndexes = [$randomIndexes];
                   }
 
-                  // Seçilen indexlere göre rastgele postları al
                   $randomPosts = array_map(fn($index) => $allPosts[$index], $randomIndexes);
                ?>
 

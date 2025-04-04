@@ -26,7 +26,7 @@ class BlogController extends Controller
     {
         $postsAll = (new Post($this->getDB()))->all();
 
-        $perPage = 6; // Sayfa başına gösterilecek post sayısı
+        $perPage = 6; 
         $totalPages = ceil(count($postsAll) / $perPage);
 
         $currentPage = isset($_GET['page']) ? (int) $_GET['page'] : 1;
