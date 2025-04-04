@@ -116,12 +116,21 @@ abstract class Model
             return $stmt->execute($params);
         }
 
+        // print($params['limit']);
+
         if ($method === 'prepare') {
+            // $stmt->bindValue(':limit', $params['limit'], PDO::PARAM_INT);
+            // $stmt->bindValue(':offset', $params['offset'], PDO::PARAM_INT);
+
+            // $stmt->execute();
             $stmt->execute($params);
         }
 
         $fetch = is_null($single) ? 'fetchAll' : 'fetch';
+        $result = $stmt->$fetch();
 
-        return $stmt->$fetch();
+
+        return $result ? $result : array();
+
     }
 }

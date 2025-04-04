@@ -73,11 +73,18 @@
                         <td><?php echo $post->title; ?></td>
                         <td><?php echo $post->getCreatedAt(); ?></td>
                         <td class="m-3">
+
+                            <a href="<?php echo url("posts/$post->id"); ?>"
+                               class="btn btn-sm btn-primary">
+                                <i class="bi bi-eye"></i>
+                                View
+                            </a>
                             <a href="<?php echo url("admin/posts/edit/$post->id"); ?>"
                                class="btn btn-sm btn-primary">
                                 <i class="bi bi-pencil-square"></i>
                                 Edit
                             </a>
+                            
 
                             <form class="d-inline"
                                   action="<?php echo url("admin/posts/delete"); ?>"

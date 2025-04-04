@@ -170,6 +170,39 @@ class PostController extends Controller
                 unset($_POST['old_image']);
             }
 
+            // function cleanHtml($html) {
+            //     $html = preg_replace('/<div>(.*?)<\/div>/', '<p>$1</p>', $html); // Convert <div> to <p>
+            //     $html = preg_replace('/<p>\s*<\/p>/', '', $html); // Remove empty <p> tags
+            //     return trim($html);
+            // }
+            
+            // $cleaned_body = cleanHtml($_POST['body']);
+
+            // $_POST['body'] = $cleaned_body;
+            // $_POST['body'] = $cleaned_body;
+            // $_POST['body'] = htmlspecialchars($_POST['body']);
+
+            // $_POST['body'] = preg_replace('/<div>(.*?)<\/div>/', '<p>$1</p>', $_POST['body']); // Convert <div> to <p>
+            
+            $_POST['body'] = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $_POST['body']); // Remove scripts
+            $_POST['body'] = preg_replace('/<(iframe|object|embed|applet|meta|link|style|base|form|input|button|select|textarea|svg)\b[^>]*>(.*?)<\/\1>/is', '', $_POST['body']); // Remove dangerous elements
+            // $_POST['body'] = htmlspecialchars($_POST['body'], ENT_QUOTES, 'UTF-8'); // Convert only remaining special characters
+
+            $_POST['body'] = preg_replace('/<p>\s*<\/p>/', '', $_POST['body']); // Remove empty <p> tags
+            $_POST['body'] = preg_replace('/<([a-z][a-z0-9]*)\b[^>]*>/i', '<$1>', $_POST['body']);
+
+
+            $allowed_tags = '<br><h1><h2><h3><h4><h5><h6><p><strong><b><em><i><ul><ol><li>';
+            $_POST['body'] = strip_tags($_POST['body'], $allowed_tags); // Keep only safe tags
+
+            // $_POST['body'] = strip_tags($_POST['body'], '<br><h1><h2><h3><h4><h5><h6>');
+
+            
+
+
+
+            // unset($_POST['body']);
+
             if ($post->update($_POST, $tags)) {                
                 unlink($old_image_dir);
                 

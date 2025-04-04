@@ -234,6 +234,11 @@ function download(e, t, i) {
       null == document.currentScript.getAttribute("editor_height")
         ? "480"
         : document.currentScript.getAttribute("editor_height"),
+    enter_mode = "p",
+    force_p_newlines = true,
+            forced_root_block =  "p", 
+            paste_as_text=true, 
+            paste_auto_cleanup_on_paste = true,
     run_local =
       null == document.currentScript.getAttribute("run_local")
         ? "no"

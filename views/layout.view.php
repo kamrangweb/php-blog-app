@@ -93,6 +93,69 @@
             <?php echo $content; ?>
          </div>
       </section>
+
+      <?php 
+         $actual_link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+         if (($actual_link == ROOT_URL)){?>
+         <section class="p-0">
+            <div class="row m-0 p-0">
+               <div class="col col-md-6 mx-auto mb-5">
+
+               <?php 
+                  $allPosts = $params['posts'];
+                  $totalPosts = count($allPosts);
+
+                  // Eğer toplam post sayısı 5'ten azsa, hepsini al
+                  $numPosts = min(5, $totalPosts);
+
+                  // Rastgele indexleri oluştur
+                  $randomIndexes = array_rand(range(0, $totalPosts - 1), $numPosts);
+
+                  // Eğer tek bir değer dönerse array yapısına al
+                  if (!is_array($randomIndexes)) {
+                     $randomIndexes = [$randomIndexes];
+                  }
+
+                  // Seçilen indexlere göre rastgele postları al
+                  $randomPosts = array_map(fn($index) => $allPosts[$index], $randomIndexes);
+               ?>
+
+                 
+                  <div id="recentPostsCarousel" class="carousel slide w-lg-50 w-md-50 mx-auto" data-bs-ride="carousel">
+                     <div class="carousel-indicators">
+                        <?php foreach ($randomPosts as $index => $post): ?>
+                           <button type="button" data-bs-target="#recentPostsCarousel" data-bs-slide-to="<?php echo $index; ?>" class="<?php echo $index === 0 ? 'active' : ''; ?>" aria-label="Slide <?php echo $index + 1; ?>"></button>
+                        <?php endforeach; ?>
+                     </div>
+                     
+                     <div class="carousel-inner mb-5 ">
+                        <?php foreach ($randomPosts as $index => $post): ?>
+                           <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                           <div class="d-flex justify-content-center">
+                              <img src="<?php echo $post->image_path; ?>" class="d-block w-100 w-md-50 rounded" alt="Post Image">
+                           </div>
+                           <div class="carousel-caption d-flex flex-column align-items-center justify-content-center text-white bg-dark bg-opacity-50 p-3">
+                              <h4><?php echo mb_strimwidth($post->title, 0, 50, "..."); ?></h4>
+                              <p><?php echo strip_tags($post->getExcerpt(), "<strong><br><b>"); ?></p>
+                              <a href="<?php echo url("posts/$post->id"); ?>" class="btn btn-outline-light">Read More</a>
+                           </div>
+                           </div>
+                        <?php endforeach; ?>
+                     </div>
+
+                     <button class="carousel-control-prev" type="button" data-bs-target="#recentPostsCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                     </button>
+                     <button class="carousel-control-next" type="button" data-bs-target="#recentPostsCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </section>
+      <?php }?>
       <!-- Call to Action Section -->
       <section id="cta">
          <h1 class="text-center cta-text ">Write your story and make impression</h1>
@@ -158,6 +221,43 @@
       <script src="<?php echo asset('js/sweet.js'); ?>"></script>
       <script src="<?php echo asset('js/filter.js'); ?>"></script>
       <script src="<?php echo asset('js/upload.js'); ?>"></script>
+      <script src="<?php echo asset('js/typing-text.js'); ?>"></script>
       <script src="<?php echo asset('js/script.js'); ?>" htmeditor_textarea="input_content" full_screen="no" editor_height="350" editor_width="100%" run_local="no"></script>
+                              
+      <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        HTMEditor.init({
+            textarea: "input_content",
+            full_screen: "no",
+            editor_height: "480",
+            editor_width: "100%",
+            run_local: "yes",
+            enter_mode: "p", // Forces paragraphs instead of <div>
+            force_p_newlines: true,
+            forced_root_block: "p", // Ensures every block starts as <p>
+            paste_as_text: true, // Paste text without extra formatting
+            paste_auto_cleanup_on_paste: true // Cleans unwanted tags when pasting
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("form_edit_post").addEventListener("submit", function () {
+            let editorContent = document.getElementById("input_content").value;
+
+            // Remove unnecessary <div> and wrap everything inside a single <p>
+            editorContent = editorContent.replace(/<div>/g, "<p>").replace(/<\/div>/g, "</p>");
+            
+            // Ensure text inside a <p> and not in separate tags
+            if (!editorContent.startsWith("<p>")) {
+                editorContent = "<p>" + editorContent + "</p>";
+            }
+
+            document.getElementById("input_content").value = editorContent;
+        });
+    });
+
+
+</script>
    </body>
 </html>

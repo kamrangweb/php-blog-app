@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use DateTime;
 use Exception;
+use PDO;
 
 
 class Post extends Model
@@ -30,7 +31,36 @@ class Post extends Model
          join users u on u.id = p.user_id 
          left join categories c on c.id = p.category_id
          ORDER BY p.id desc");
+
+
+
     }
+
+
+    public function getPostsPage(int $limit, int $offset): array
+{
+    $sql = "
+        SELECT p.id, p.title, p.body, p.image_path, p.created_at, 
+               u.id as user_id, u.username as username, 
+               c.id as category_id, c.category as category_name
+        FROM posts p
+        JOIN users u ON u.id = p.user_id 
+        LEFT JOIN categories c ON c.id = p.category_id
+        ORDER BY p.id DESC
+        LIMIT $limit OFFSET $offset
+    ";
+
+    // $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    // $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+    // $stmt->execute();
+
+    return $this->query($sql);
+
+}
+
+    
+
 
  
     public function getCreatedAt(): string
@@ -118,4 +148,6 @@ class Post extends Model
                 ORDER BY p.id DESC",
         [$userId]);
     }
+
+    
 }
