@@ -45,8 +45,27 @@
       <!-- APP CSS -->
       <link rel="stylesheet" href="<?php echo asset('css/custom.css'); ?>">
       <link rel="stylesheet" href="<?php echo asset('css/upload.css'); ?>">
+
+      <!-- Selected2 -->
+      <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
    </head>
    <body>
+   <?php
+      if (!isset($_COOKIE['infoCookies'])) {
+         $cookiePolicy = str_replace('public/', '', ROOT_URL) . 'views/cookie-policy.view.php';
+
+
+         echo '
+         <div id="cookies" class="cookie-popup">
+            <p>
+                  This website uses cookies to improve your experience and technical performance.
+                  See our <a class="cookieLinks" target="_blank" href="' . $cookiePolicy . '">cookie policy</a>.
+            </p>
+            <button onclick="hideCookie()" class="cookie-btn">OK</button>
+         </div>';
+      }
+   ?>
+
       <section id="top-bar" class="">
          <div class="container">
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-2">
@@ -219,7 +238,14 @@
       <script src="<?php echo asset('js/upload.js'); ?>"></script>
       <script src="<?php echo asset('js/typing-text.js'); ?>"></script>
       <script src="<?php echo asset('js/script.js'); ?>" htmeditor_textarea="input_content" full_screen="no" editor_height="350" editor_width="100%" run_local="no"></script>
-                              
+                        
+      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+      <script>
+         $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
+         });
+      </script>
+
       <script>
     document.addEventListener("DOMContentLoaded", function () {
         HTMEditor.init({

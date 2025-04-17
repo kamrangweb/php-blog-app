@@ -184,6 +184,60 @@ body {
     animation: blink 0.7s infinite;
 }
 
+/* Cookie Popup Styles */
+#cookies.cookie-popup {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #158b1a;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    z-index: 9999;
+    max-width: 90%;
+    width: 500px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.cookie-popup p {
+    margin: 0 0 10px;
+    font-size: 15px;
+}
+
+.cookieLinks {
+    color: #fff;
+    text-decoration: underline;
+    font-weight: bold;
+}
+.cookieLinks:hover {
+    color: #000;
+}
+
+.cookie-btn {
+    background-color: #ffffff;
+    color: #158b1a;
+    border: none;
+    padding: 7px 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.cookie-btn:hover {
+    background-color: #dff5e0;
+}
+
+/* Optional fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+
 @keyframes blink {
     50% {
         opacity: 0;

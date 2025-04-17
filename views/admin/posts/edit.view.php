@@ -103,7 +103,7 @@
                     </div>
                     <div class="col-lg-12 col-md-6 col-sm-12 mb-2">
                         <label for="input_tags" class="form-label">Tags</label>
-                        <select class="form-select"
+                        <select class="form-select js-example-basic-multiple"
                                 id="input_tags"
                                 name="tags[]"
                                 multiple aria-label="multiple select example"

@@ -256,3 +256,18 @@ function download(e, t, i) {
       load_js_callback,
     );
   
+
+
+
+function hideCookie() {
+    const CookieDate = new Date();
+    CookieDate.setFullYear(CookieDate.getFullYear() + 1);
+    // CookieDate.setSeconds(CookieDate.getSeconds() + 10);
+
+    // Set cookie
+    document.cookie = 'infoCookies=true; expires=' + CookieDate.toUTCString() + '; path=/';
+
+    // Hide the popup
+    const popup = document.getElementById("cookies");
+    if (popup) popup.style.display = "none";
+}

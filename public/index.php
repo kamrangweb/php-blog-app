@@ -49,6 +49,9 @@ $router->get('/admin/posts/edit/:id', 'App\Http\Controllers\Admin\PostController
 $router->post('/admin/posts/update', 'App\Http\Controllers\Admin\PostController@update');
 $router->post('/admin/posts/delete', 'App\Http\Controllers\Admin\PostController@delete');
 
+$router->get('/cookie-policy', 'PageController@cookiePolicy');
+
+
 try {
     $router->run();
 } catch (NotFoundException $e) {
