@@ -45,6 +45,8 @@
                         <div class="position-relative">
                         <img class="card-img" src="<?php echo $post->image_path; ?>" alt="Post Image">
 
+
+                        
                         <div class="card-img-overlay position-absolute">
                             <?php foreach ($post->getTagsOfPost($post->id) as $tag): ?>
                                 <span class="badge bg-light text-decoration-none text-dark small">
