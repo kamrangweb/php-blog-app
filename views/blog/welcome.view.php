@@ -6,7 +6,10 @@
             <div class="col-md-6 mb-3 ">
                 <h1 class="header-info">Read and write your blogs about</h1>         
 
-                <p id="typing-text" class="lead header-info text-warning font-weight-normal"></p>
+                <!-- <p id="typing-text" class="lead header-info bg-primary font-weight-normal "></p> -->
+                <p id="typing-text" class="lead header-info font-weight-normal rounded px-3 py-1 pt-0 d-inline-block text-center mx-auto"></p>
+                <br>
+
 
 
                 <!-- <button class="btn btn-outline-light btn-lg btn-space m-0 mt-5"><i class="bi bi-pen"></i> Get started</button> -->

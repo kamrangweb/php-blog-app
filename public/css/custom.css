@@ -36,7 +36,8 @@ body {
 }
 
 #top-bar nav {
-    background-color: #51839b;
+    background-color: #5a34fc ;
+    color: #f1f1f3 !important;
 }
 
 .hero-section {
@@ -53,7 +54,15 @@ body {
 .header-info {
     font-weight: 800;
     font-size: 3rem;
-    color: #fff;
+    color: #eeeafc;
+}
+
+.lead{
+	background-color: #DAD2FF;
+    color: #6268d7 ;
+
+    border-radius: 10px !important;
+
 }
 
 .btn-outline-light {
@@ -190,7 +199,7 @@ body {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #158b1a;
+    background-color: #493D9E;
     color: white;
     padding: 15px 25px;
     border-radius: 10px;
@@ -219,7 +228,7 @@ body {
 
 .cookie-btn {
     background-color: #ffffff;
-    color: #158b1a;
+    color: #493D9E;
     border: none;
     padding: 7px 20px;
     font-weight: bold;

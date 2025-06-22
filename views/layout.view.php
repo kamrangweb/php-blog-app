@@ -68,7 +68,7 @@
 
       <section id="top-bar" class="">
          <div class="container">
-            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-2">
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top p-2">
                <div class="container">
                   <a class="navbar-brand nav-link font-weight-bold ml-2 border-0 text-decoration-none" style="outline:0;" href="<?php echo url('/'); ?>">Blogger</a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,7 +83,7 @@
                      <ul class="navbar-nav ml-auto mb-2 mb-md-0">
                         <?php if (!isset($_SESSION['auth'])): ?>
                         <li class="nav-item  ">
-                           <a class="nav-link btn btn-lg btn-outline-light text-muted m-0" href="<?php echo url('login'); ?>">Login</a>
+                           <a class=" btn btn-lg btn-outline-light m-0 px-3 pt-1 pb-1 " href="<?php echo url('login'); ?>">Login</a>
                         </li>
                         <?php endif; ?>
                      </ul>
@@ -96,6 +96,9 @@
                         <?php endif; ?>
                         <li class="nav-item">
                            <a class="nav-link" href="<?php echo url('admin/posts'); ?>">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link" href="<?php echo url('admin/profile'); ?>">Profile</a>
                         </li>
                         <li class="nav-item">
                            <a class="nav-link" href="<?php echo url('logout'); ?>">Logout</a>
@@ -200,6 +203,7 @@
                         <ul class="list-unstyled mb-0">
                            <?php if (isset($_SESSION['auth'])) {?>
                            <li class="mb-2"><a href="<?php echo url('admin/posts'); ?>" class="text-muted text-decoration-none">Dashboard</a></li>
+                           <li class="mb-2"><a href="<?php echo url('admin/profile'); ?>" class="text-muted text-decoration-none">Profile</a></li>
                            <?php }?>
                            <li class="mb-2"><a href="<?php echo url('/'); ?>" class="text-muted text-decoration-none">Home</a></li>
                            <li class="mb-2"><a href="<?php echo url('posts'); ?>" class="text-muted text-decoration-none">Articles</a></li>

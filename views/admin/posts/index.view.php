@@ -48,10 +48,16 @@
 
             <!-- <h1 class="m-3">USER <?php echo $_SESSION['user']; ?></h1> -->
             <h1 class="m-3 mb-3">Admin panel</h1>
-            <a href="<?php echo url("admin/posts/create"); ?>" class="btn btn-success float-end">
-                <i class="bi bi-plus"></i>
-                New
-            </a>
+            <div class="float-end">
+                <a href="<?php echo url("admin/profile"); ?>" class="btn btn-info me-2">
+                    <i class="bi bi-person"></i>
+                    Profile
+                </a>
+                <a href="<?php echo url("admin/posts/create"); ?>" class="btn btn-success">
+                    <i class="bi bi-plus"></i>
+                    New
+                </a>
+            </div>
         </div>
     </div>
 </div>
