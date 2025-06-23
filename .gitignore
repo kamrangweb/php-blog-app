@@ -1,0 +1,5 @@
+# Docker related
+/docker-compose.yml
+/docker-setup.bat
+/docker-setup.ps1
+/kafka-setup.php 

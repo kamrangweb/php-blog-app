@@ -7,24 +7,45 @@ namespace Composer\Autoload;
 class ComposerStaticInit6b6672c3c5aeb0395290c2e54c2b7078
 {
     public static $files = array (
+        'e8aa6e4b5a1db2f56ae794f1505391a8' => __DIR__ . '/..' . '/amphp/amp/lib/functions.php',
         '898ea945ccbe56da1526dbef9e820e3e' => __DIR__ . '/../..' . '/app/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'P' => 
+        array (
+            'Psr\\Log\\' => 8,
+        ),
         'A' => 
         array (
             'App\\' => 4,
+            'Amp\\' => 4,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
+        'Amp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/amphp/amp/lib',
+        ),
     );
 
     public static $prefixesPsr0 = array (
+        'K' => 
+        array (
+            'Kafka\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/nmred/kafka-php/src',
+            ),
+        ),
         'B' => 
         array (
             'Bramus' => 

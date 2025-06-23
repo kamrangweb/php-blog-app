@@ -1,4 +1,3 @@
-
 <?php if (!empty($_SESSION['errors_upload']['upload'])): ?>
     <div class="row">
         <div class="container">
@@ -94,3 +93,6 @@
         </div>
     </div>
 </div>
+
+<!-- Activity Pool Script -->
+<script src="<?php echo asset('js/activity-pool.js'); ?>"></script>

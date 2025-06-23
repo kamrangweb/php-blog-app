@@ -133,3 +133,6 @@
     </div>
 </div>
 
+<!-- Activity Pool Script -->
+<script src="<?php echo asset('js/activity-pool.js'); ?>"></script>
+

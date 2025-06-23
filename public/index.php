@@ -1,7 +1,7 @@
 <?php
-
-// error_reporting(E_ALL);
-// ini_set('display_errors', '1');
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
 echo "<!DOCTYPE html>";
 
@@ -51,6 +51,11 @@ $router->post('/admin/posts/delete', 'App\Http\Controllers\Admin\PostController@
 
 $router->get('/admin/profile', 'App\Http\Controllers\Admin\ProfileController@index');
 
+// Activity Pool Routes
+$router->post('/api/activity/track', 'App\Http\Controllers\ActivityPoolController@trackContent');
+$router->get('/api/activity/notifications', 'App\Http\Controllers\ActivityPoolController@getNotifications');
+$router->get('/api/activity/subscribe', 'App\Http\Controllers\ActivityPoolController@subscribe');
+
 $router->get('/cookie-policy', 'PageController@cookiePolicy');
 
 
@@ -58,4 +63,8 @@ try {
     $router->run();
 } catch (NotFoundException $e) {
     $e->error404();
+}
+
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['user_id'] = 1; // or any test user ID
 }
