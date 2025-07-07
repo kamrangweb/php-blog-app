@@ -44,7 +44,7 @@
             </div>
 
             <div class="card-body show-text p-4">
-                <p class="main-text" style="text-indent: 50px;"><?php echo $params['post']->body; ?></p>
+                <div class="post-body main-text"><?php echo $params['post']->body; ?></div>
 
                 <div class=" justify-content-between">
                     <a href="<?php echo url('posts'); ?>" class="btn btn-danger float-end">

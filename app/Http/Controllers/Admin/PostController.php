@@ -78,6 +78,26 @@ class PostController extends Controller
         }
     
         $_POST['user_id'] = $_SESSION['user'];
+
+        // Sanitize post body for security
+        if (isset($_POST['body'])) {
+            // Remove scripts
+            $_POST['body'] = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $_POST['body']);
+            // Remove dangerous elements
+            $_POST['body'] = preg_replace('/<(iframe|object|embed|applet|meta|link|style|base|form|input|button|select|textarea|svg)\b[^>]*>(.*?)<\/\1>/is', '', $_POST['body']);
+            // Remove event handlers and javascript: from attributes
+            $_POST['body'] = preg_replace('/ on\w+\s*=\s*(["\"]).*?\1/si', '', $_POST['body']);
+            $_POST['body'] = preg_replace('/javascript:/i', '', $_POST['body']);
+            // Remove empty <p> tags
+            $_POST['body'] = preg_replace('/<p>\s*<\/p>/', '', $_POST['body']);
+            // Remove all attributes from allowed tags
+            $_POST['body'] = preg_replace('/<([a-z][a-z0-9]*)\b[^>]*>/i', '<$1>', $_POST['body']);
+            // Allow only safe tags
+            $allowed_tags = '<br><h1><h2><h3><h4><h5><h6><p><strong><b><em><i><ul><ol><li>';
+            $_POST['body'] = strip_tags($_POST['body'], $allowed_tags);
+            // Optionally, trim whitespace
+            $_POST['body'] = trim($_POST['body']);
+        }
     
         if (!isset($_SESSION['errors_upload']['upload'])) {
             if ($post->create($_POST, $tags)) {

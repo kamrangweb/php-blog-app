@@ -1,3 +1,25 @@
+<?php
+$logFile = __DIR__ . '/../../storage/logs/404.log';
+$logDir = dirname($logFile);
+if (!is_dir($logDir)) {
+    mkdir($logDir, 0777, true);
+}
+$attemptedUrl = $_SERVER['REQUEST_URI'] ?? 'unknown';
+
+// List of file extensions to ignore (static files)
+$ignoreExtensions = ['css', 'js', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'ico', 'webp', 'woff', 'woff2', 'ttf', 'eot', 'map', 'txt', 'xml', 'json'];
+
+$ext = strtolower(pathinfo(parse_url($attemptedUrl, PHP_URL_PATH), PATHINFO_EXTENSION));
+
+// Only log if it's not a static file request
+if (!in_array($ext, $ignoreExtensions)) {
+    $timestamp = date('Y-m-d H:i:s');
+    $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
+    $logEntry = "[$timestamp] $ip tried $attemptedUrl | UA: $userAgent" . PHP_EOL;
+    file_put_contents($logFile, $logEntry, FILE_APPEND);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

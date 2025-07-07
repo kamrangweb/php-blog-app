@@ -3,3 +3,5 @@
 /docker-setup.bat
 /docker-setup.ps1
 /kafka-setup.php 
+vendor/
+tests/ 

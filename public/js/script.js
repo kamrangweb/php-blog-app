@@ -66,7 +66,7 @@ function download(e, t, i) {
             "print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons",
           imagetools_cors_hosts: ["picsum.photos"],
           toolbar:
-            "preview | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | table | undo redo | bold italic underline strikethrough | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | print | insertfile image media template link anchor codesample | ltr rtl",
+            "preview | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | table | undo redo | bold italic underline strikethrough | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | print | insertfile image media template link anchor codesample | ltr rtl | removeformat",
           toolbar_sticky: !0,
           autosave_ask_before_unload: !0,
           autosave_interval: "30s",
@@ -211,6 +211,7 @@ function download(e, t, i) {
                 "yes" == t && e.execCommand("mceFullScreen");
               });
           },
+          paste_as_text: true,
         });
     },
     loadScript = function (e, t) {

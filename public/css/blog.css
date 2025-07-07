@@ -101,3 +101,35 @@
   .blog-footer p:last-child {
     margin-bottom: 0;
   }
+
+/* Consistent post body formatting */
+.post-body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.1rem;
+  color: #222;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+.post-body p {
+  margin-bottom: 1em;
+  text-indent: 2em;
+}
+.post-body ul, .post-body ol {
+  margin-left: 2em;
+  margin-bottom: 1em;
+}
+.post-body li {
+  margin-bottom: 0.5em;
+}
+.post-body h1, .post-body h2, .post-body h3, .post-body h4, .post-body h5, .post-body h6 {
+  font-family: inherit;
+  font-weight: bold;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+.post-body strong, .post-body b {
+  font-weight: bold;
+}
+.post-body em, .post-body i {
+  font-style: italic;
+}

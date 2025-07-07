@@ -68,6 +68,11 @@ class Post extends Model
         return (new DateTime($this->created_at))->format('d/m/Y  h:ia');
     }
 
+    public function getUpdatedAt(): string
+    {
+        return isset($this->updated_at) ? (new DateTime($this->updated_at))->format('d/m/Y  h:ia') : '';
+    }
+
 
     public function getExcerpt(): string
     {

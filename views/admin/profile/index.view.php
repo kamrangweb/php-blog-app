@@ -163,6 +163,51 @@
                 </div>
             </div>
         </div>
+        <!-- 404 Attempts Section -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="bi bi-exclamation-triangle me-2"></i>Recent 404 Attempts</h5>
+                    </div>
+                    <div class="card-body">
+                        <?php
+                        $logFile = __DIR__ . '/../../../storage/logs/404.log';
+                        if (file_exists($logFile)) {
+                            $lines = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+                            $lines = array_reverse($lines); // Show most recent first
+                            $lines = array_slice($lines, 0, 20); // Limit to 20
+                            if (count($lines) > 0) {
+                                echo '<ul class="list-group">';
+                                foreach ($lines as $line) {
+                                    // Extract the URL from the log entry
+                                    if (preg_match('/tried ([^ ]+)/', $line, $matches)) {
+                                        $url = $matches[1];
+                                        $ext = strtolower(pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION));
+                                        $ignoreExtensions = ['css', 'js', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'ico', 'webp', 'woff', 'woff2', 'ttf', 'eot', 'map', 'txt', 'xml', 'json'];
+                                        if (!in_array($ext, $ignoreExtensions)) {
+                                            // Bold the whole line for non-static URLs
+                                            echo '<li class="list-group-item small"><strong>' . htmlspecialchars($line, ENT_QUOTES, 'UTF-8') . '</strong></li>';
+                                        } else {
+                                            // Normal for static file URLs
+                                            echo '<li class="list-group-item small">' . htmlspecialchars($line, ENT_QUOTES, 'UTF-8') . '</li>';
+                                        }
+                                    } else {
+                                        echo '<li class="list-group-item small">' . htmlspecialchars($line, ENT_QUOTES, 'UTF-8') . '</li>';
+                                    }
+                                }
+                                echo '</ul>';
+                            } else {
+                                echo '<div class="text-muted">No 404 attempts logged yet.</div>';
+                            }
+                        } else {
+                            echo '<div class="text-muted">No 404 attempts logged yet.</div>';
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

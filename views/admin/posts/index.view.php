@@ -69,6 +69,7 @@
                     <th scope="col">Number</th>
                     <th scope="col">Title</th>
                     <th scope="col">Date</th>
+                    <th scope="col">Updated Date</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -78,6 +79,7 @@
                         <th ><span class="rounded-pill text-mute border badge bg-primary small">#<?php echo $post->id; ?></span></th>
                         <td><?php echo $post->title; ?></td>
                         <td><?php echo $post->getCreatedAt(); ?></td>
+                        <td><?php echo $post->getUpdatedAt(); ?></td>
                         <td class="m-3">
 
                             <a href="<?php echo url("posts/$post->id"); ?>"
