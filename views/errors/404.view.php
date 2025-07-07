@@ -4,6 +4,7 @@ $logDir = dirname($logFile);
 if (!is_dir($logDir)) {
     mkdir($logDir, 0777, true);
 }
+
 $attemptedUrl = $_SERVER['REQUEST_URI'] ?? 'unknown';
 
 // List of file extensions to ignore (static files)
