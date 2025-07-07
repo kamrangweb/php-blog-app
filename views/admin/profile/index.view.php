@@ -179,6 +179,7 @@
                             $lines = array_slice($lines, 0, 20); // Limit to 20
                             if (count($lines) > 0) {
                                 echo '<ul class="list-group">';
+                                
                                 foreach ($lines as $line) {
                                     // Extract the URL from the log entry
                                     if (preg_match('/tried ([^ ]+)/', $line, $matches)) {
