@@ -91,8 +91,7 @@
                                class="btn btn-sm btn-primary">
                                 <i class="bi bi-pencil-square"></i>
                                 Edit
-                            </a>
-                            
+                            </a>                           
 
                             <form class="d-inline"
                                   action="<?php echo url("admin/posts/delete"); ?>"
