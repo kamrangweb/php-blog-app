@@ -6,153 +6,314 @@ use DateTime;
 use Exception;
 use PDO;
 
-
 class Post extends Model
 {
-
     protected $table = 'posts';
 
-
-    public function findById(int $id)
+    /**
+     * Base query for posts
+     */
+    private function basePostQuery(): string
     {
-        $model = $this->query("SELECT p.id, p.title, p.body, p.image_path, p.created_at, u.id as user_id, u.username as username, c.id as category_id , c.category as category_name
-         FROM posts p 
-         join users u on u.id = p.user_id
-         left join categories c on c.id = p.category_id
-         where p.id = ?", [$id], true);
+        return "
+            SELECT 
+                p.id,
+                p.title,
+                p.body,
+                p.image_path,
+                p.created_at,
 
-        return $model ?: false;
+                u.id AS user_id,
+                u.username AS username,
+
+                c.id AS category_id,
+                c.category AS category_name
+
+            FROM posts p
+
+            JOIN users u 
+                ON u.id = p.user_id
+
+            LEFT JOIN categories c 
+                ON c.id = p.category_id
+        ";
     }
 
+    /**
+     * Find single post
+     */
+    public function findById(int $id): ?array
+    {
+        $sql = $this->basePostQuery() . "
+            WHERE p.id = ?
+        ";
+
+        $post = $this->query($sql, [$id], true);
+
+        return $post ?: null;
+    }
+
+    /**
+     * Get all posts
+     */
     public function all(): array
     {
-        return $this->query("SELECT p.id, p.title, p.body, p.image_path, p.created_at, u.id as user_id, u.username as username, c.id as category_id , c.category as category_name
-         FROM posts p
-         join users u on u.id = p.user_id 
-         left join categories c on c.id = p.category_id
-         ORDER BY p.id desc");
+        $sql = $this->basePostQuery() . "
+            ORDER BY p.id DESC
+        ";
 
-
-
+        return $this->query($sql);
     }
 
-
+    /**
+     * Paginated posts
+     */
     public function getPostsPage(int $limit, int $offset): array
-{
-    $sql = "
-        SELECT p.id, p.title, p.body, p.image_path, p.created_at, 
-               u.id as user_id, u.username as username, 
-               c.id as category_id, c.category as category_name
-        FROM posts p
-        JOIN users u ON u.id = p.user_id 
-        LEFT JOIN categories c ON c.id = p.category_id
-        ORDER BY p.id DESC
-        LIMIT $limit OFFSET $offset
-    ";
+    {
+        $sql = $this->basePostQuery() . "
+            ORDER BY p.id DESC
+            LIMIT :limit OFFSET :offset
+        ";
 
-    // $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-    // $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt = $this->db->getPDO()->prepare($sql);
 
-    // $stmt->execute();
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 
-    return $this->query($sql);
+        $stmt->execute();
 
-}
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-    
-
-
- 
+    /**
+     * Format created date
+     */
     public function getCreatedAt(): string
     {
-        return (new DateTime($this->created_at))->format('d/m/Y  h:ia');
+        return (new DateTime($this->created_at))
+            ->format('d/m/Y h:ia');
     }
 
+    /**
+     * Format updated date
+     */
     public function getUpdatedAt(): string
     {
-        return isset($this->updated_at) ? (new DateTime($this->updated_at))->format('d/m/Y  h:ia') : '';
+        return isset($this->updated_at)
+            ? (new DateTime($this->updated_at))->format('d/m/Y h:ia')
+            : '';
     }
 
-
+    /**
+     * Short body preview
+     */
     public function getExcerpt(): string
     {
         return mb_strimwidth($this->body, 0, 100, "...");
     }
 
- 
-    public function tags(): array
+    /**
+     * Get all tags
+     */
+    public function getAllTags(): array
     {
-
-        return $this->query("SELECT t.* FROM tags t ORDER BY t.id DESC");
+        return $this->query("
+            SELECT *
+            FROM tags
+            ORDER BY id DESC
+        ");
     }
 
-
+    /**
+     * Create post with tags
+     */
     public function create(array $data, ?array $relations = null): bool
     {
-        if (parent::create($data, $categoryId)) {
-            $post_id = $this->db->getPDO()->lastInsertId();
-        }
+        $pdo = $this->db->getPDO();
 
-        if (isset($post_id)) {
-            if (!is_null($relations)) {
-                foreach ($relations as $tag_id) {
-                    $stmt = $this->db->getPDO()->prepare("INSERT INTO post_tag (post_id, tag_id) VALUES (?, ?)");
-                    $stmt->execute([$post_id, $tag_id]);
-                }
+        try {
+
+            $pdo->beginTransaction();
+
+            $created = parent::create($data);
+
+            if (!$created) {
+                $pdo->rollBack();
+                return false;
             }
-            return true;
-        }
 
-        return false;
+            $postId = (int) $pdo->lastInsertId();
+
+            /**
+             * Insert tags
+             */
+            if (!empty($relations)) {
+
+                $values = [];
+                $params = [];
+
+                foreach ($relations as $tagId) {
+                    $values[] = "(?, ?)";
+                    $params[] = $postId;
+                    $params[] = $tagId;
+                }
+
+                $sql = "
+                    INSERT INTO post_tag (post_id, tag_id)
+                    VALUES " . implode(',', $values);
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($params);
+            }
+
+            $pdo->commit();
+
+            return true;
+
+        } catch (Exception $e) {
+
+            $pdo->rollBack();
+
+            return false;
+        }
     }
 
-
+    /**
+     * Update post with tags
+     */
     public function update(array &$data, ?array $relations = null): bool
     {
-        parent::update($data);
+        $pdo = $this->db->getPDO();
 
-        $post_id = $this->id;
+        try {
 
-        print_r($relations);
+            $pdo->beginTransaction();
 
-        $stmt = $this->db->getPDO()->prepare("DELETE FROM post_tag WHERE post_id = ?");
-        $result = $stmt->execute([$post_id]);
+            $updated = parent::update($data);
 
-        if (!is_null($relations)) {
-            foreach ($relations as $tag_id) {
-                $stmt = $this->db->getPDO()->prepare("INSERT INTO post_tag (post_id, tag_id) VALUES (?, ?)");
-                $stmt->execute([$post_id, $tag_id]);
+            if (!$updated) {
+                $pdo->rollBack();
+                return false;
             }
-        }
 
-        return $result;
+            $postId = $this->id;
+
+            /**
+             * Remove old relations
+             */
+            $stmt = $pdo->prepare("
+                DELETE FROM post_tag
+                WHERE post_id = ?
+            ");
+
+            $stmt->execute([$postId]);
+
+            /**
+             * Insert new relations
+             */
+            if (!empty($relations)) {
+
+                $values = [];
+                $params = [];
+
+                foreach ($relations as $tagId) {
+                    $values[] = "(?, ?)";
+                    $params[] = $postId;
+                    $params[] = $tagId;
+                }
+
+                $sql = "
+                    INSERT INTO post_tag (post_id, tag_id)
+                    VALUES " . implode(',', $values);
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($params);
+            }
+
+            $pdo->commit();
+
+            return true;
+
+        } catch (Exception $e) {
+
+            $pdo->rollBack();
+
+            return false;
+        }
     }
 
+    /**
+     * Get all tags with selected state
+     */
     public function getTags(int $postId): array
     {
         return $this->query(
-            "SELECT t.id, t.tag, t.created_at, case when t.id= pt.tag_id then true else false end is_selected FROM tags t
-                LEFT JOIN post_tag pt ON pt.tag_id = t.id AND pt.post_id = ?
-                ORDER BY t.created_at DESC",
-        [$postId]);
+            "
+            SELECT 
+                t.id,
+                t.tag,
+                t.created_at,
+
+                CASE
+                    WHEN pt.tag_id IS NOT NULL THEN true
+                    ELSE false
+                END AS is_selected
+
+            FROM tags t
+
+            LEFT JOIN post_tag pt
+                ON pt.tag_id = t.id
+                AND pt.post_id = ?
+
+            ORDER BY t.created_at DESC
+            ",
+            [$postId]
+        );
     }
 
+    /**
+     * Get tags of single post
+     */
     public function getTagsOfPost(int $postId): array
     {
         return $this->query(
-            "SELECT t.* FROM tags t
-                JOIN post_tag pt ON pt.tag_id = t.id AND pt.post_id = ?
-                ORDER BY t.created_at DESC",
-        [$postId]);
+            "
+            SELECT t.*
+
+            FROM tags t
+
+            JOIN post_tag pt
+                ON pt.tag_id = t.id
+
+            WHERE pt.post_id = ?
+
+            ORDER BY t.created_at DESC
+            ",
+            [$postId]
+        );
     }
 
-    public function getPostsByUserId(int $userId) {
+    /**
+     * Get posts by user
+     */
+    public function getPostsByUserId(int $userId): array
+    {
         return $this->query(
-            "SELECT * FROM posts p
-                WHERE p.user_id = ?
-                ORDER BY p.id DESC",
-        [$userId]);
-    }
+            "
+            SELECT
+                p.id,
+                p.title,
+                p.body,
+                p.image_path,
+                p.created_at
 
-    
+            FROM posts p
+
+            WHERE p.user_id = ?
+
+            ORDER BY p.id DESC
+            ",
+            [$userId]
+        );
+    }
 }
